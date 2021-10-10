@@ -55,6 +55,7 @@ function Uploadpage(){
         <Grid container direction="row" alignItems="center"  style={{marginTop:'5%'}}>
            <Grid item xs={4}/>
             <Grid item xs={4}>
+                {/* <ContactCard/> */}
   <Loader/>
            </Grid>
            <Grid item xs={4}/>
