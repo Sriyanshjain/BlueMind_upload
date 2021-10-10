@@ -1,12 +1,14 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import Contact from './assets/Contacts upload.svg';
-import ContactImg from './assets/contact_image.svg';
-import Card from '@material-ui/core/Card';
+
+
 import Button from '@material-ui/core/Button';
-import Radio from '@material-ui/core/Radio';
+
 
 import { makeStyles } from '@material-ui/core/styles';
+import ContactCard from "./contactcard";
+import Loader from "./loader";
 
 
 const useStyles = makeStyles({
@@ -53,17 +55,7 @@ function Uploadpage(){
         <Grid container direction="row" alignItems="center"  style={{marginTop:'5%'}}>
            <Grid item xs={4}/>
             <Grid item xs={4}>
-           <Card style={{width:'80%',margin:'5% 10%',borderRadius:'15px',border:'1.5px solid rgb(38,34,97,0.4)'}}>
-           <Radio
-        checked={true}
-        color="primary"
-        name="radio-button-demo"
-        size="small"
-        style={{marginLeft:'80%'}}
-      />
-      <img
-      src={ContactImg} style={{width:'40%',height:'250px'}}/>
-           </Card>
+  <Loader/>
            </Grid>
            <Grid item xs={4}/>
         </Grid>
