@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import React,{useState} from "react";
 import Contact from './assets/Contacts upload.svg';
-
+import * as XLSX from '../node_modules/xlsx/xlsx'
 
 import Button from '@material-ui/core/Button';
 
@@ -32,11 +32,32 @@ const useStyles = makeStyles({
 
 function Uploadpage(){
     
-    const [selectedFile, setSelectedFile] = useState();
+    const [data, setData] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
-    const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
-		setIsFilePicked(true);
+    const changeHandler = (e) => {
+        var file = e.target.files[0]
+        const reader = new FileReader();
+		reader.onload = (e) => {
+			/* Parse data */
+			const ab = e.target.result;
+			const wb = XLSX.read(ab, {type:'array'});
+			/* Get first worksheet */
+			const wsname = wb.SheetNames[0];
+			const ws = wb.Sheets[wsname];
+			/* Convert array of arrays */
+			const data = XLSX.utils.sheet_to_json(ws, {header:1});
+			setData(data);
+            XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+
+		    /* generate XLSX file and save to client */
+		    XLSX.writeFile(wb, "sheetjs.csv");
+            
+            /*CSV Object to be used to upload*/
+            const fileCSV = XLSX.utils.sheet_to_csv(ws);
+            
+		    setIsFilePicked(true);
+		};
+		reader.readAsArrayBuffer(file);
 	};
 
 	const handleSubmission = () => {
