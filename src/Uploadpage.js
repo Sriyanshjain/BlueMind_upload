@@ -27,6 +27,12 @@ const useStyles = makeStyles({
       backgroundColor:'#7cb3df',
       color:'#ffff'
   },
+  TypographyStyle:{
+    padding:'2%',
+    fontSize:'1.2rem',
+    fontFamily: 'Open Sans, sans-serif',
+    fontWeight:'bold'
+  }
 
     })
 
@@ -94,17 +100,17 @@ function Uploadpage(){
         <Grid container direction="row" style={{marginTop:'2%'}}>
             
             <Grid item xs={4}>
-            <Typography style={{padding:'1%',fontSize:'1.3rem',fontFamily: 'Open Sans, sans-serif',fontWeight:'bold'}}>
+            <Typography className={classes.TypographyStyle}>
                <a className={classes.linkStyle} href="#">View import guide</a>
             </Typography>
             </Grid>
             <Grid item xs={5}>
-            <Typography style={{padding:'1%',fontSize:'1.3rem',fontFamily: 'Open Sans, sans-serif',fontWeight:'bold'}}>
-               <a className={classes.linkStyle} href='#'> Download sample spreadsheet</a>
+            <Typography className={classes.TypographyStyle}>
+               <a className={classes.linkStyle} href="./assets/Contacts image.png" download="Contacts image.png"> Download sample spreadsheet</a>
             </Typography>
             </Grid>
             <Grid item xs={3}>
-            <Typography style={{padding:'1%',fontSize:'1.3rem',fontFamily: 'Open Sans, sans-serif',fontWeight:'bold'}}>
+            <Typography className={classes.TypographyStyle}>
                <a className={classes.linkStyle}  href="#">View the FAQ</a>
             </Typography>
             </Grid>
