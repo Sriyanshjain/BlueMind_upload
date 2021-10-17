@@ -2,10 +2,7 @@ import { Grid, Typography } from "@material-ui/core";
 import React,{useState} from "react";
 import Contact from './assets/Contacts upload.svg';
 import * as XLSX from '../node_modules/xlsx/xlsx'
-
 import Button from '@material-ui/core/Button';
-
-
 import { makeStyles } from '@material-ui/core/styles';
 import ContactCard from "./contactcard";
 import Loader from "./loader";
@@ -40,8 +37,11 @@ function Uploadpage(){
     
     const [data, setData] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
+    const [filename,setFileName]=useState("");
+    const [homeState,setHomeState]=useState(true);
     const changeHandler = (e) => {
         var file = e.target.files[0]
+        setFileName(e.target.files[0].name.toString());
         const reader = new FileReader();
 		reader.onload = (e) => {
 			/* Parse data */
@@ -49,6 +49,7 @@ function Uploadpage(){
 			const wb = XLSX.read(ab, {type:'array'});
 			/* Get first worksheet */
 			const wsname = wb.SheetNames[0];
+           
 			const ws = wb.Sheets[wsname];
 			/* Convert array of arrays */
 			const data = XLSX.utils.sheet_to_json(ws, {header:1});
@@ -56,7 +57,7 @@ function Uploadpage(){
             XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
 
 		    /* generate XLSX file and save to client */
-		    XLSX.writeFile(wb, "sheetjs.csv");
+		  
             
             /*CSV Object to be used to upload*/
             const fileCSV = XLSX.utils.sheet_to_csv(ws);
@@ -95,7 +96,7 @@ function Uploadpage(){
         <Grid container direction="row" alignItems="center"  style={{marginTop:'5%'}}>
            <Grid item xs={3} sm={3}/>
             <Grid item xs={6} sm={6}>
-               {isFilePicked?<Loader/>:<ContactCard/>}
+               {isFilePicked?<Loader  filename={filename}/>:<ContactCard/>}
            </Grid>
            <Grid item xs={3} sm={3}/>
         </Grid>
@@ -140,7 +141,7 @@ function Uploadpage(){
         <Grid container direction="row" style={{marginTop:'10%',padding:'2%'}}>
             
             <Grid item xs={3}>
-            <a className={classes.linkStyle2} href="#">Cancel</a>
+            <a className={classes.linkStyle2} onClick={()=>setIsFilePicked(false)} href="#"> {isFilePicked?"Back":"Cancel"}</a>
             </Grid>
             <Grid item xs={6}/>
             <Grid item xs={3}>
@@ -153,11 +154,11 @@ function Uploadpage(){
         type="file"
         onChange={changeHandler}
       />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" className={classes.Buttonstyle} component="span" onClick={handleSubmission}>
+      {!isFilePicked && <label htmlFor="contained-button-file">
+        < Button variant="contained" className={classes.Buttonstyle} component="span" onClick={handleSubmission}>
           import
         </Button>
-      </label>
+      </label>}
       </form>
            </Grid> 
         </Grid>
